@@ -1,35 +1,31 @@
-const bedrock = require('bedrock-protocol');
+const mineflayer = require('mineflayer');
 
 const SERVER_HOST = 'Poboi6.aternos.me';
-const SERVER_PORT = 17733;
+const SERVER_PORT = 17733; // તમારો Java/Geyser Port
 const BOT_NAME = 'KhatanaBot';
 
 function createBot() {
-  console.log('Connecting bot to Minecraft server...');
+  console.log('Attempting connection via Mineflayer...');
 
-  const client = bedrock.createClient({
+  const bot = mineflayer.createBot({
     host: SERVER_HOST,
     port: Number(SERVER_PORT),
     username: BOT_NAME,
-    offline: true,
-    // સર્વર સાથે વર્ઝન મેચ કરવા માટે auto/false રાખવું
-    version: '1.26.40', 
-    skipPing: true,
-    connectTimeout: 30000
+    checkTimeoutInterval: 60000
   });
 
-  client.on('join', () => {
-    console.log(`✅ SUCCESS: ${BOT_NAME} joined the server!`);
+  bot.on('spawn', () => {
+    console.log(`✅ SUCCESS: ${BOT_NAME} connected and spawned in server!`);
   });
 
-  client.on('disconnect', (packet) => {
-    console.log('❌ Disconnected:', packet);
+  bot.on('end', (reason) => {
+    console.log('❌ Bot disconnected. Reason:', reason);
     console.log('Reconnecting in 15 seconds...');
     setTimeout(createBot, 15000);
   });
 
-  client.on('error', (err) => {
-    console.log('⚠️ Error:', err.message);
+  bot.on('error', (err) => {
+    console.log('⚠️ Error occurred:', err.message);
     setTimeout(createBot, 15000);
   });
 }
