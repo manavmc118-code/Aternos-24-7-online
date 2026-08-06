@@ -1,11 +1,11 @@
 {
-  "name": "mc-bedrock-bot",
+  "name": "mc-247-bot",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "bedrock-protocol": "latest"
+    "mineflayer": "^4.20.1"
   }
 }
