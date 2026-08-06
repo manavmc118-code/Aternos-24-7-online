@@ -1,8 +1,7 @@
 const bedrock = require('bedrock-protocol');
 
-// તમારું અટેરનોસ સર્વર IP અને Port
-const SERVER_HOST = 'Poboi6.aternos.me'; 
-const SERVER_PORT = 17733;                      
+const SERVER_HOST = 'Poboi6.aternos.me';
+const SERVER_PORT = 17733;
 const BOT_NAME = 'KhatanaBot';
 
 function createBot() {
@@ -10,24 +9,28 @@ function createBot() {
 
   const client = bedrock.createClient({
     host: SERVER_HOST,
-    port: SERVER_PORT,
+    port: Number(SERVER_PORT),
     username: BOT_NAME,
-    offline: true // Aternos Offline/Cracked મોડ માટે
+    offline: true,
+    // સર્વર સાથે વર્ઝન મેચ કરવા માટે auto/false રાખવું
+    version: '1.26.40', 
+    skipPing: true,
+    connectTimeout: 30000
   });
 
   client.on('join', () => {
-    console.log(`✅ ${BOT_NAME} Successfully connected!`);
+    console.log(`✅ SUCCESS: ${BOT_NAME} joined the server!`);
   });
 
-  // જો સર્વર કે બોટ ડિસકનેક્ટ થાય તો 10 સેકન્ડમાં ઓટો-રીકનેક્ટ થશે
-  client.on('disconnect', (reason) => {
-    console.log('Disconnected:', reason);
-    setTimeout(createBot, 10000);
+  client.on('disconnect', (packet) => {
+    console.log('❌ Disconnected:', packet);
+    console.log('Reconnecting in 15 seconds...');
+    setTimeout(createBot, 15000);
   });
 
   client.on('error', (err) => {
-    console.log('Error occurred:', err.message);
-    setTimeout(createBot, 10000);
+    console.log('⚠️ Error:', err.message);
+    setTimeout(createBot, 15000);
   });
 }
 
