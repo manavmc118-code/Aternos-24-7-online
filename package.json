@@ -1,11 +1,15 @@
 {
-  "name": "mc-247-bot",
+  "name": "my-node-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "My first Node.js server",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
-  "dependencies": {
-    "mineflayer": "^4.20.1"
-  }
+  "keywords": [
+    "nodejs",
+    "server"
+  ],
+  "author": "",
+  "license": "ISC"
 }
